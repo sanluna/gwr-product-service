@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gwr-product-service
+  labels:
+    app: gwr-product-service
+  namespace: gwr-api
+  annotations:
+    moniker.spinnaker.io/stack: product
+    moniker.spinnaker.io/detail: service
+spec:
+  selector:
+    matchLabels:
+      app: gwr-product-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gwr-product-service
+    spec:
+      containers:
+      - name: master
+        image: eu.gcr.io/sanluna-gwr/gwr-product-service
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 18102
+        readinessProbe:
+          httpGet:
+            path: /memberservice/status/health
+            port: 18102
+            httpHeaders:
+            - name: Content-Type
+              value: application/json
+            - name: Accept
+              value: application/json
+          periodSeconds: 8
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 6
+          initialDelaySeconds: 20
+        livenessProbe:
+          httpGet:
+            path: /productservice/status/health
+            port: 18102
+            httpHeaders:
+            - name: Content-Type
+              value: application/json
+            - name: Accept
+              value: application/json
+          periodSeconds: 4
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 6
+          initialDelaySeconds: 20
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            cpu: 150m
+            memory: 256Mi
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gwr-product-service
+  namespace: gwr-api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: gwr-product-service
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80

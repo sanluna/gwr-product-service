@@ -1,0 +1,16 @@
+server:
+  port: 18102
+  use-forward-headers: true
+  servlet:
+    context-path: /productservice
+spring:
+  application:
+    name: gwr-product-service
+  cloud:
+    config:
+      uri: http://localhost:18001/configservice
+
+---
+spring:
+  profiles: cloud
+  cloud.config.uri: http://gwr-configuration-service/configservice
