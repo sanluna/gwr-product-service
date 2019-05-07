@@ -26,7 +26,7 @@ spec:
         - containerPort: 18102
         readinessProbe:
           httpGet:
-            path: /memberservice/status/health
+            path: /productservice/status/health
             port: 18102
             httpHeaders:
             - name: Content-Type
