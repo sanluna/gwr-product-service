@@ -162,6 +162,17 @@ public class ProductEntity extends BaseEntity<ProductEntity> {
 
     @Override
     public ProductEntity updateEntity(ProductEntity newEntity) {
-        return null;
+        if(newEntity.getBrand() != null) setBrand(newEntity.getBrand());
+        if(newEntity.getCampaign() != null) setCampaign(newEntity.getCampaign());
+        if(newEntity.getArticleNumber() != null) setArticleNumber(newEntity.getArticleNumber());
+        if(newEntity.getName() != null) setName(newEntity.getName());
+        if(newEntity.getDescription() != null) setDescription(newEntity.getDescription());
+        if(newEntity.getInPrice() != null) setInPrice(newEntity.getInPrice());
+        if(newEntity.getOutPrice() != null) setOutPrice(newEntity.getOutPrice());
+        if(newEntity.getProducerArticleNumber() != null) setProducerArticleNumber(newEntity.getProducerArticleNumber());
+        if(newEntity.getProductGroups() != null) setProductGroups(newEntity.getProductGroups());
+        if(newEntity.getProductInfo() != null) setProductInfo(newEntity.getProductInfo());
+        if(newEntity.getStorageQuantity() != 0) setStorageQuantity(newEntity.getStorageQuantity());
+        return this;
     }
 }

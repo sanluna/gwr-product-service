@@ -32,6 +32,8 @@ public class ProductGroupEntity extends BaseEntity<ProductGroupEntity> {
 
     @Override
     public ProductGroupEntity updateEntity(ProductGroupEntity newEntity) {
-        return null;
+        setId(newEntity.getId());
+        if(newEntity.getGroupName() != null) setGroupName(newEntity.getGroupName());
+        return this;
     }
 }

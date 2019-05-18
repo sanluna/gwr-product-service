@@ -37,7 +37,7 @@ public class ProductController implements BaseController<Product> {
 
     @Override
     @PutMapping
-    public Product update(Product dto) {
+    public Product update(@RequestBody Product dto) {
         return service.update(dto.convertToEntity()).convertToDTO();
     }
 

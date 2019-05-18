@@ -62,6 +62,9 @@ public class ProductReviewEntity extends BaseEntity<ProductReviewEntity> {
 
     @Override
     public ProductReviewEntity updateEntity(ProductReviewEntity newEntity) {
+        setId(newEntity.getId());
+        setRating(newEntity.getRating());
+        if(newEntity.getReview() != null) setReview(newEntity.getReview());
         return null;
     }
 }

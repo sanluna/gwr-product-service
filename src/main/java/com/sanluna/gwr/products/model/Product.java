@@ -7,6 +7,7 @@ import com.sanluna.commons.util.Converter;
 import com.sanluna.gwr.products.model.entity.ProductEntity;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,7 +27,8 @@ public class Product extends BaseDTO<Product> {
     private BigDecimal outPrice;
     private BigDecimal outPriceCampaign;
     private String brand;
-    private List<String> productGroups;
+    private String productGroups;
+
     private ProductCampaign campaign;
 
     public String getName() {
@@ -120,10 +122,17 @@ public class Product extends BaseDTO<Product> {
     }
 
     public List<String> getProductGroups() {
-        return productGroups;
+        return Arrays.asList(productGroups.split(","));
     }
 
     public Product setProductGroups(List<String> productGroups) {
+        StringBuilder groups;
+        groups = new StringBuilder();
+        productGroups.forEach(x -> groups.append(x).append(","));
+        this.productGroups = groups.toString();
+        return this;
+    }
+    public Product setProductGroups(String productGroups) {
         this.productGroups = productGroups;
         return this;
     }
